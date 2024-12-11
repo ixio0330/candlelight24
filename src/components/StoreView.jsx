@@ -36,7 +36,7 @@ export default function StoreView({ stores }) {
       <VMap stores={stores} setSelectedStoreIds={setSelectedStoreIds} />
 
       <div className="fixed bottom-0 left-0 w-full">
-        <section className="m-auto h-80 w-full max-w-screen-md rounded-t-3xl bg-white p-5">
+        <section className="m-auto h-[50vh] w-full max-w-screen-md rounded-t-3xl bg-white p-5">
           {selectedStores ? (
             <>
               <h2 className="mb-2 text-lg font-bold">선결제 매장 목록</h2>
