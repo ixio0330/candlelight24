@@ -96,8 +96,12 @@ export default function StoreView({ stores }) {
                             key={`order-${recipient_name}-${idx}`}
                             className="rounded-lg border border-stone-300 bg-white p-2"
                           >
-                            <h4>수령이름: {recipient_name}</h4>
-                            <div className="my-1 h-px bg-stone-200" />
+                            {recipient_name !== 'null' && (
+                              <>
+                                <h4>수령이름: {recipient_name}</h4>
+                                <div className="my-1 h-px bg-stone-200" />
+                              </>
+                            )}
                             <ul className="space-y-1">
                               {list?.map(
                                 ({ id, name, quantity, max_per_person }) => (
