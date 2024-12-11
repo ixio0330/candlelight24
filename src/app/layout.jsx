@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body className={`${notoSans.className} bg-white`}>
-        <header className="fixed left-0 top-0 w-full bg-black text-white">
+        <header className="fixed left-0 top-0 z-40 w-full bg-black text-white">
           <div className="m-auto flex h-16 max-w-screen-md items-center px-5">
             <h1 className="flex items-center gap-2 font-semibold">
               <Image src="/logo.png" alt="촛불24 로고" width={32} height={32} />
