@@ -2,63 +2,20 @@
 
 import { Clock3, MapPin, Pencil, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import { useStoreCache } from '../hooks/useStoreCache'
 import OverlayLoader from './OverlayLoader'
 import VMap from './VMap'
 
 export default function StoreView({ stores }) {
   const [selectedStoreIds, setSelectedStoreIds] = useState(null)
   const [selectedStores, setSelectedStores] = useState(null)
-  const [loading, setLoading] = useState(null)
-  const [storeDataCache, setStoreDataCache] = useState({})
+  const { getStores, loading } = useStoreCache()
 
   useEffect(() => {
-    if (selectedStoreIds != null && selectedStoreIds?.length > 0) {
-      const uncachedStoreIds = selectedStoreIds.filter(
-        (id) => !storeDataCache[id],
-      )
-
-      const updateSelectedStores = () => {
-        const selectedStoresData = selectedStoreIds
-          .map((id) => storeDataCache[id])
-          .filter((store) => store != null)
-        setSelectedStores(selectedStoresData)
-      }
-
-      if (uncachedStoreIds.length === 0) {
-        updateSelectedStores()
-        return
-      }
-
-      const fetchStores = async () => {
-        try {
-          setLoading(true)
-          const storeIdsString = uncachedStoreIds.join(',')
-          const response = await fetch(`/api/stores?ids=${storeIdsString}`)
-          const data = await response.json()
-
-          if (response == null) {
-            toast.error('오류가 발생했어요.')
-            return
-          }
-
-          const newCache = { ...storeDataCache }
-          data.forEach((store) => {
-            newCache[store.id] = store
-          })
-          setStoreDataCache(newCache)
-
-          updateSelectedStores()
-        } catch (err) {
-          toast.error('오류가 발생했어요.')
-        } finally {
-          setLoading(false)
-        }
-      }
-
-      fetchStores()
+    if (selectedStoreIds?.length) {
+      getStores(selectedStoreIds).then(setSelectedStores)
     }
-  }, [selectedStoreIds, storeDataCache])
+  }, [selectedStoreIds, getStores])
 
   return (
     <>
