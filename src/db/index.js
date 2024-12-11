@@ -36,6 +36,9 @@ export async function getStoresByIds(storeIds = []) {
                 quantity,
                 max_per_person,
                 recipient_name,
+                time,
+                date,
+                notes,
                 created_at
             )
         `,
@@ -49,21 +52,37 @@ export async function getStoresByIds(storeIds = []) {
 
     const storesWithGroupedOrders = data.map((store) => {
       const groupedOrders = store.orders.reduce((acc, order) => {
-        const recipient = order.recipient_name
-        if (!acc[recipient]) {
-          acc[recipient] = []
+        const { recipient_name, time, date, notes, ...rest } = order
+
+        if (!acc[recipient_name]) {
+          acc[recipient_name] = {
+            time,
+            date,
+            notes,
+            list: [],
+          }
         }
-        acc[recipient].push(order)
+
+        if (notes) {
+          acc[recipient_name].notes = notes
+        }
+
+        acc[recipient_name].list.push(rest)
         return acc
       }, {})
 
       const { orders, ...storeWithoutOrders } = store
       return {
         ...storeWithoutOrders,
-        orders: Object.entries(groupedOrders).map(([recipient_name, list]) => ({
-          recipient_name,
-          list,
-        })),
+        orders: Object.entries(groupedOrders).map(
+          ([recipient_name, { time, date, notes, list }]) => ({
+            recipient_name,
+            time,
+            date,
+            notes,
+            list,
+          }),
+        ),
       }
     })
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { Clock3, MapPin, Pencil } from 'lucide-react'
+import { Clock3, MapPin, Pencil, User } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import OverlayLoader from './OverlayLoader'
@@ -24,6 +24,7 @@ export default function StoreView({ stores }) {
             toast.error('오류가 발생했어요.')
           }
 
+          console.log(data)
           setSelectedStores(data)
         } catch (err) {
           toast.error('오류가 발생했어요.')
@@ -72,62 +73,67 @@ export default function StoreView({ stores }) {
                             {detailed_address && `, ${detailed_address}`}
                           </p>
                         </div>
-
-                        {/* 날짜 & 시간 */}
-                        <p className="flex items-center gap-1">
-                          <Clock3 className="h-3.5 w-3.5 shrink-0" />
-                          {date?.split('T')[0]}일{time && `, ${time}`}
-                        </p>
-
-                        {/* 수령 */}
-
-                        {/* 메모 */}
-                        {notes && (
-                          <p className="flex items-center gap-1">
-                            <Pencil className="h-3.5 w-3.5 shrink-0" />
-                            메모: {notes}
-                          </p>
-                        )}
                       </div>
 
-                      <div>
-                        {orders?.map(({ recipient_name, list }, idx) => (
-                          <div
-                            key={`order-${recipient_name}-${idx}`}
-                            className="rounded-lg border border-stone-300 bg-white p-2"
-                          >
-                            {recipient_name !== 'null' && (
-                              <>
-                                <h4>수령이름: {recipient_name}</h4>
+                      <div className="space-y-3">
+                        {orders?.map(
+                          (
+                            { recipient_name, list, date, time, notes },
+                            idx,
+                          ) => (
+                            <div
+                              key={`order-${recipient_name}-${idx}`}
+                              className="rounded-lg border border-stone-300 bg-white p-2"
+                            >
+                              <div className="flex flex-col gap-1 text-sm">
+                                {recipient_name !== 'null' && (
+                                  <h4 className="flex items-center gap-1">
+                                    <User className="h-3.5 w-3.5 shrink-0" />
+                                    {recipient_name}
+                                  </h4>
+                                )}
+                                {/* 날짜 & 시간 */}
+                                <p className="flex items-center gap-1">
+                                  <Clock3 className="h-3.5 w-3.5 shrink-0" />
+                                  {date?.split('T')[0]}일{time && `, ${time}`}
+                                </p>
+
+                                {/* 메모 */}
+                                {notes && (
+                                  <p className="flex items-center gap-1">
+                                    <Pencil className="h-3.5 w-3.5 shrink-0" />
+                                    {notes}
+                                  </p>
+                                )}
                                 <div className="my-1 h-px bg-stone-200" />
-                              </>
-                            )}
-                            <ul className="space-y-1">
-                              {list?.map(
-                                ({ id, name, quantity, max_per_person }) => (
-                                  <li
-                                    key={`order-${name}-${id}`}
-                                    className="flex items-center gap-1"
-                                  >
-                                    <p className="text-sm font-semibold">
-                                      {name}
-                                    </p>
-                                    <p className="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-xs text-white">
-                                      총 {quantity}개
-                                    </p>
-                                    <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-xs text-white">
-                                      1인{' '}
-                                      {max_per_person > 1
-                                        ? `최대 ${max_per_person}`
-                                        : max_per_person}
-                                      개
-                                    </p>
-                                  </li>
-                                ),
-                              )}
-                            </ul>
-                          </div>
-                        ))}
+                              </div>
+                              <ul className="space-y-1">
+                                {list?.map(
+                                  ({ id, name, quantity, max_per_person }) => (
+                                    <li
+                                      key={`order-${name}-${id}`}
+                                      className="flex items-center gap-1"
+                                    >
+                                      <p className="text-sm font-semibold">
+                                        {name}
+                                      </p>
+                                      <p className="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-xs text-white">
+                                        총 {quantity}개
+                                      </p>
+                                      <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-xs text-white">
+                                        1인{' '}
+                                        {max_per_person > 1
+                                          ? `최대 ${max_per_person}`
+                                          : max_per_person}
+                                        개
+                                      </p>
+                                    </li>
+                                  ),
+                                )}
+                              </ul>
+                            </div>
+                          ),
+                        )}
                       </div>
                     </li>
                   ),
