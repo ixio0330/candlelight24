@@ -141,7 +141,7 @@ export default function StoreView({ stores }) {
         </section>
       </div>
 
-      <OverlayLoader loading={loading}>찾는중...</OverlayLoader>
+      <OverlayLoader loading={loading}>검색중...</OverlayLoader>
     </>
   )
 }
