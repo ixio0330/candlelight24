@@ -10,21 +10,45 @@ export default function StoreView({ stores }) {
   const [selectedStoreIds, setSelectedStoreIds] = useState(null)
   const [selectedStores, setSelectedStores] = useState(null)
   const [loading, setLoading] = useState(null)
+  const [storeDataCache, setStoreDataCache] = useState({})
 
   useEffect(() => {
     if (selectedStoreIds != null && selectedStoreIds?.length > 0) {
+      const uncachedStoreIds = selectedStoreIds.filter(
+        (id) => !storeDataCache[id],
+      )
+
+      const updateSelectedStores = () => {
+        const selectedStoresData = selectedStoreIds
+          .map((id) => storeDataCache[id])
+          .filter((store) => store != null)
+        setSelectedStores(selectedStoresData)
+      }
+
+      if (uncachedStoreIds.length === 0) {
+        updateSelectedStores()
+        return
+      }
+
       const fetchStores = async () => {
         try {
           setLoading(true)
-          const storeIdsString = selectedStoreIds.join(',')
+          const storeIdsString = uncachedStoreIds.join(',')
           const response = await fetch(`/api/stores?ids=${storeIdsString}`)
           const data = await response.json()
 
           if (response == null) {
             toast.error('오류가 발생했어요.')
+            return
           }
 
-          setSelectedStores(data)
+          const newCache = { ...storeDataCache }
+          data.forEach((store) => {
+            newCache[store.id] = store
+          })
+          setStoreDataCache(newCache)
+
+          updateSelectedStores()
         } catch (err) {
           toast.error('오류가 발생했어요.')
         } finally {
@@ -34,7 +58,7 @@ export default function StoreView({ stores }) {
 
       fetchStores()
     }
-  }, [selectedStoreIds])
+  }, [selectedStoreIds, storeDataCache])
 
   return (
     <>
@@ -47,16 +71,7 @@ export default function StoreView({ stores }) {
               <h2 className="mb-2 text-lg font-bold">선결제 매장 목록</h2>
               <ul className="h-full space-y-5 overflow-y-auto pb-10">
                 {selectedStores.map(
-                  ({
-                    id,
-                    name,
-                    date,
-                    time,
-                    notes,
-                    road_address,
-                    detailed_address,
-                    orders,
-                  }) => (
+                  ({ id, name, road_address, detailed_address, orders }) => (
                     <li
                       key={`store-${name}-${id}`}
                       className="space-y-2 rounded-xl bg-stone-100 p-5"
