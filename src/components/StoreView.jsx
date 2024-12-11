@@ -127,10 +127,6 @@ export default function StoreView({ stores }) {
           ) : (
             <div className="space-y-5">
               <p>
-                촛불24를 이용하면 집회를 위한 선결제 정보를 한번에 볼 수
-                있습니다.
-              </p>
-              <p>
                 지도에서 동그라미로 표시된 장소를 선택하면, 해당 지역에서 집회를
                 위해 선결제된 매장과 메뉴 정보를 쉽게 확인할 수 있습니다.
               </p>
