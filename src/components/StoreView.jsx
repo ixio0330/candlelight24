@@ -3,16 +3,19 @@
 import { Clock3, MapPin, Pencil, Tag } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
+import OverlayLoader from './Overlayloader'
 import VMap from './VMap'
 
 export default function StoreView({ stores }) {
   const [selectedStoreIds, setSelectedStoreIds] = useState(null)
   const [selectedStores, setSelectedStores] = useState(null)
+  const [loading, setLoading] = useState(null)
 
   useEffect(() => {
     if (selectedStoreIds != null && selectedStoreIds?.length > 0) {
       const fetchStores = async () => {
         try {
+          setLoading(true)
           const storeIdsString = selectedStoreIds.join(',')
           const response = await fetch(`/api/stores?ids=${storeIdsString}`)
           const data = await response.json()
@@ -24,6 +27,8 @@ export default function StoreView({ stores }) {
           setSelectedStores(data)
         } catch (err) {
           toast.error('오류가 발생했어요.')
+        } finally {
+          setLoading(false)
         }
       }
 
@@ -133,6 +138,8 @@ export default function StoreView({ stores }) {
           )}
         </section>
       </div>
+
+      <OverlayLoader loading={loading}>찾는중...</OverlayLoader>
     </>
   )
 }
