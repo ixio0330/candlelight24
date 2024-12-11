@@ -59,6 +59,7 @@ export async function getStoresByIds(storeIds = []) {
         `,
       )
       .in('id', storeIds)
+      .filter('orders.date', 'gt', getToday())
 
     if (error) {
       console.log(error)
