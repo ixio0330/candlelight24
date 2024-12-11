@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
         className={`${notoSans.className} h-screen overflow-hidden bg-white`}
       >
         <header className="fixed left-0 top-0 z-40 w-full bg-black text-white">
-          <div className="m-auto flex h-14 max-w-screen-md items-center px-5">
+          <div className="m-auto flex h-14 max-w-screen-md items-center">
             <h1 className="flex items-center gap-2 font-semibold">
               <Image src="/logo.png" alt="촛불24 로고" width={32} height={32} />
               촛불24
