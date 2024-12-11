@@ -12,7 +12,7 @@ import VectorSource from 'ol/source/Vector.js'
 import { Icon, Style, Text } from 'ol/style'
 import { useEffect } from 'react'
 
-export default function VMap() {
+export default function VMap({ stores }) {
   useEffect(() => {
     // create Map instance
     const map = new Map({
