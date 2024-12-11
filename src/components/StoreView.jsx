@@ -24,7 +24,6 @@ export default function StoreView({ stores }) {
             toast.error('오류가 발생했어요.')
           }
 
-          console.log(data)
           setSelectedStores(data)
         } catch (err) {
           toast.error('오류가 발생했어요.')

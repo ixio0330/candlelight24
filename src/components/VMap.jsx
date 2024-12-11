@@ -31,7 +31,7 @@ export default function VMap({ stores, setSelectedStoreIds }) {
       }),
     })
 
-    const markers = stores.map(({ id, name, latitude, longitude }) => {
+    const markers = stores?.map(({ id, name, latitude, longitude }) => {
       const marker = new Feature({
         geometry: new Point(fromLonLat([longitude, latitude])),
         storeName: name,

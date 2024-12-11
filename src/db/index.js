@@ -1,21 +1,38 @@
 import createSupabase from '@/supabase'
+import { getToday } from '@/utils/date'
 
 export async function getAllStores() {
   try {
     const supabase = createSupabase()
 
-    const { data, error } = await supabase
-      .from('stores')
-      .select('id, date, name, latitude, longitude')
-      .order('date', { ascending: false })
+    const { data: orders, error: ordersError } = await supabase
+      .from('orders')
+      .select('store_id')
+      .gt('date', getToday())
 
-    if (error) {
-      console.log(error)
+    if (ordersError) {
+      console.log(ordersError)
       return null
     }
 
-    return data ?? []
+    const storeIds = orders?.map((order) => order.store_id) ?? []
+    if (storeIds.length === 0) {
+      return []
+    }
+
+    const { data: stores, error: storesError } = await supabase
+      .from('stores')
+      .select('id, name, latitude, longitude')
+      .in('id', storeIds)
+
+    if (storesError) {
+      console.error('Error fetching stores:', storesError)
+      return null
+    }
+
+    return stores ?? []
   } catch (error) {
+    console.log(error)
     return null
   }
 }
@@ -86,6 +103,7 @@ export async function getStoresByIds(storeIds = []) {
 
     return storesWithGroupedOrders ?? []
   } catch (error) {
+    console.log(error)
     return null
   }
 }
