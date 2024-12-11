@@ -1,5 +1,4 @@
 import createSupabase from '@/supabase'
-import { getToday } from '@/utils/date'
 
 export async function getAllStores() {
   try {
@@ -8,7 +7,6 @@ export async function getAllStores() {
     const { data, error } = await supabase
       .from('stores')
       .select('id, date, name, latitude, longitude')
-      .gt('date', getToday())
       .order('date', { ascending: false })
 
     if (error) {
