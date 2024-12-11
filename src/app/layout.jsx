@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Noto_Sans_KR } from 'next/font/google'
 import Image from 'next/image'
 import { Toaster } from 'react-hot-toast'
@@ -56,6 +57,8 @@ export default function RootLayout({ children }) {
 
         <Toaster />
       </body>
+
+      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID} />
     </html>
   )
 }
