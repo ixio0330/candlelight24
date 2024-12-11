@@ -38,7 +38,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ko">
-      <body className={`${notoSans.className} bg-white`}>
+      <body
+        className={`${notoSans.className} h-screen overflow-hidden bg-white`}
+      >
         <header className="fixed left-0 top-0 z-40 w-full bg-black text-white">
           <div className="m-auto flex h-16 max-w-screen-md items-center px-5">
             <h1 className="flex items-center gap-2 font-semibold">
@@ -48,7 +50,7 @@ export default function RootLayout({ children }) {
           </div>
         </header>
         <main className="mt-16 bg-white">
-          <div className="m-auto max-w-screen-md px-5">{children}</div>
+          <div className="m-auto max-w-screen-md">{children}</div>
         </main>
       </body>
     </html>
