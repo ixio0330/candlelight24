@@ -3,7 +3,7 @@
 import { Clock3, MapPin, Pencil, Tag } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import OverlayLoader from './Overlayloader'
+import OverlayLoader from './OverlayLoader'
 import VMap from './VMap'
 
 export default function StoreView({ stores }) {
