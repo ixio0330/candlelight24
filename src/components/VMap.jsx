@@ -26,7 +26,7 @@ export default function VMap({ stores, setSelectedStoreIds }) {
       ],
       target: 'vmap',
       view: new View({
-        center: fromLonLat([126.92247308499337, 37.52572414089632]),
+        center: fromLonLat([126.9207213978247, 37.52402008409]),
         zoom: 15,
       }),
     })
