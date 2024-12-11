@@ -1,15 +1,15 @@
 'use client'
-
 import { Map, View } from 'ol'
 import { defaults } from 'ol/control'
-import Feature from 'ol/Feature.js'
-import Point from 'ol/geom/Point.js'
-import { Tile, Vector } from 'ol/layer'
+import Feature from 'ol/Feature'
+import Point from 'ol/geom/Point'
+import { Tile, Vector as VectorLayer } from 'ol/layer'
 import 'ol/ol.css'
 import { fromLonLat } from 'ol/proj'
 import { XYZ } from 'ol/source'
-import VectorSource from 'ol/source/Vector.js'
-import { Icon, Style, Text } from 'ol/style'
+import ClusterSource from 'ol/source/Cluster'
+import VectorSource from 'ol/source/Vector'
+import { Circle, Fill, Icon, Stroke, Style, Text } from 'ol/style'
 import { useEffect } from 'react'
 
 export default function VMap({ stores }) {
@@ -31,20 +31,18 @@ export default function VMap({ stores }) {
       }),
     })
 
-    const markers = []
-
-    stores?.forEach(({ name, latitude, longitude }) => {
-      let marker = new Feature({
+    const markers = stores.map(({ name, latitude, longitude }) => {
+      const marker = new Feature({
         geometry: new Point(fromLonLat([longitude, latitude])),
+        storeName: name,
       })
 
-      let myStyle = new Style({
+      const markerStyle = new Style({
         text: new Text({
           text: name,
           font: 'bold 14px sans-serif',
           offsetY: 10,
         }),
-
         image: new Icon({
           anchor: [0.5, 1],
           src: 'http://map.vworld.kr/images/ol3/marker_blue.png',
@@ -52,18 +50,69 @@ export default function VMap({ stores }) {
         }),
       })
 
-      marker.setStyle(myStyle)
-      markers.push(marker)
+      marker.setStyle(markerStyle)
+      return marker
     })
 
-    const markerLayer = new Vector({
-      source: new VectorSource({
-        features: [...markers],
-      }),
+    const vectorSource = new VectorSource({
+      features: markers,
     })
 
-    map.addLayer(markerLayer)
-  })
+    const clusterSource = new ClusterSource({
+      distance: 50,
+      source: vectorSource,
+    })
+
+    const clusterStyleFunction = (feature) => {
+      const singleFeature = feature.get('features')[0]
+      const size = feature.get('features').length
+
+      const style = new Style({
+        image: new Circle({
+          radius: size > 1 ? 15 : 10,
+          fill: new Fill({
+            color:
+              size > 1 ? 'rgba(255, 153, 0, 0.8)' : 'rgba(0, 128, 255, 0.8)',
+          }),
+          stroke: new Stroke({
+            color: '#fff',
+            width: 2,
+          }),
+        }),
+        text: new Text({
+          text:
+            size > 1
+              ? size.toString()
+              : (singleFeature?.get('storeName') ?? ''),
+          fill: new Fill({
+            color: '#000',
+          }),
+          font: 'bold 12px sans-serif',
+        }),
+      })
+      return style
+    }
+
+    const clusterLayer = new VectorLayer({
+      source: clusterSource,
+      style: clusterStyleFunction,
+    })
+
+    map.addLayer(clusterLayer)
+
+    map.on('click', (event) => {
+      const feature = map.forEachFeatureAtPixel(event.pixel, (feat) => feat)
+
+      if (feature) {
+        const clusteredFeatures = feature.get('features')
+        console.log(clusteredFeatures)
+      }
+    })
+
+    return () => {
+      map.setTarget(undefined)
+    }
+  }, [stores])
 
   return <div id="vmap" style={{ width: '100%', height: '500px' }} />
 }
