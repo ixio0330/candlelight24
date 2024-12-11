@@ -1,5 +1,6 @@
 'use client'
 
+import { Clock3, MapPin, Pencil, Tag } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import VMap from './VMap'
@@ -54,42 +55,81 @@ export default function StoreView({ stores }) {
                   }) => (
                     <li
                       key={`store-${name}-${id}`}
-                      className="rounded-xl bg-stone-100 p-5"
+                      className="space-y-2 rounded-xl bg-stone-100 p-5"
                     >
                       <h3 className="font-semibold">{name}</h3>
-                      <p>
-                        {date?.split('T')[0]}일{time && `, ${time}`}
-                      </p>
-                      <p>{recipient_name}</p>
-                      <p>
-                        {road_address}
-                        {detailed_address && `, ${detailed_address}`}
-                      </p>
-                      <p>{notes}</p>
-                      <ul>
-                        {orders?.map(
-                          ({ id, name, quantity, max_per_person }) => (
-                            <li key={`order-${name}-${id}`}>
-                              <p>메뉴명: {name}</p>
-                              <p>개수: {quantity}</p>
-                              <p>
-                                1인{' '}
-                                {max_per_person > 1
-                                  ? `최대 ${max_per_person}`
-                                  : max_per_person}
-                                개
-                              </p>
-                            </li>
-                          ),
+
+                      <div className="space-y-1 text-sm">
+                        {/* 주소 */}
+                        <div className="flex items-center gap-1">
+                          <MapPin className="h-4 w-4 shrink-0" />
+                          <p>
+                            {road_address}
+                            {detailed_address && `, ${detailed_address}`}
+                          </p>
+                        </div>
+
+                        {/* 날짜 & 시간 */}
+                        <p className="flex items-center gap-1">
+                          <Clock3 className="h-3.5 w-3.5 shrink-0" />
+                          {date?.split('T')[0]}일{time && `, ${time}`}
+                        </p>
+
+                        {/* 수령 */}
+                        <p className="flex items-center gap-1">
+                          <Tag className="h-3.5 w-3.5 shrink-0" />
+                          수령이름: {recipient_name}
+                        </p>
+
+                        {/* 메모 */}
+                        {notes && (
+                          <p className="flex items-center gap-1">
+                            <Pencil className="h-3.5 w-3.5 shrink-0" />
+                            메모: {notes}
+                          </p>
                         )}
-                      </ul>
+                      </div>
+
+                      <div>
+                        <ul className="space-y-2">
+                          {orders?.map(
+                            ({ id, name, quantity, max_per_person }) => (
+                              <li
+                                key={`order-${name}-${id}`}
+                                className="flex items-center gap-2"
+                              >
+                                <p className="font-semibold">{name}</p>
+                                <p className="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-sm text-white">
+                                  총 {quantity}개
+                                </p>
+                                <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-sm text-white">
+                                  1인{' '}
+                                  {max_per_person > 1
+                                    ? `최대 ${max_per_person}`
+                                    : max_per_person}
+                                  개
+                                </p>
+                              </li>
+                            ),
+                          )}
+                        </ul>
+                      </div>
                     </li>
                   ),
                 )}
               </ul>
             </>
           ) : (
-            <div>촛불24는 ~입니다.</div>
+            <div className="space-y-5">
+              <p>
+                촛불24를 이용하면 집회를 위한 선결제 정보를 한번에 볼 수
+                있습니다.
+              </p>
+              <p>
+                지도에서 동그라미로 표시된 장소를 선택하면, 해당 지역에서 집회를
+                위해 선결제된 매장과 메뉴 정보를 쉽게 확인할 수 있습니다.
+              </p>
+            </div>
           )}
         </section>
       </div>
