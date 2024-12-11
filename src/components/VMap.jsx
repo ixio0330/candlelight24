@@ -31,10 +31,11 @@ export default function VMap({ stores }) {
       }),
     })
 
-    const markers = stores.map(({ name, latitude, longitude }) => {
+    const markers = stores.map(({ id, name, latitude, longitude }) => {
       const marker = new Feature({
         geometry: new Point(fromLonLat([longitude, latitude])),
         storeName: name,
+        storeId: id,
       })
 
       const markerStyle = new Style({
@@ -87,7 +88,8 @@ export default function VMap({ stores }) {
           fill: new Fill({
             color: '#000',
           }),
-          font: 'bold 12px sans-serif',
+          font: 'bold 14px sans-serif',
+          offsetY: size > 1 ? 0 : 22,
         }),
       })
       return style
@@ -105,7 +107,8 @@ export default function VMap({ stores }) {
 
       if (feature) {
         const clusteredFeatures = feature.get('features')
-        console.log(clusteredFeatures)
+        const storeId = clusteredFeatures.map((f) => f.get('storeId'))
+        console.log(storeId)
       }
     })
 
