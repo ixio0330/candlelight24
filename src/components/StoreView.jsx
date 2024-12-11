@@ -8,8 +8,24 @@ export default function StoreView({ stores }) {
   const [selectedStores, setSelectedStores] = useState(null)
 
   useEffect(() => {
-    if (selectedStoreIds != null) {
-      // TODO
+    if (selectedStoreIds != null && selectedStoreIds?.length > 0) {
+      const fetchStores = async () => {
+        try {
+          const storeIdsString = selectedStoreIds.join(',')
+          const response = await fetch(`/api/stores?ids=${storeIdsString}`)
+          const data = await response.json()
+
+          if (response == null) {
+            // error
+          }
+
+          setSelectedStores(data)
+        } catch (err) {
+          // error
+        }
+      }
+
+      fetchStores()
     }
   }, [selectedStoreIds])
 
