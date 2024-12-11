@@ -12,7 +12,7 @@ import VectorSource from 'ol/source/Vector'
 import { Circle, Fill, Icon, Stroke, Style, Text } from 'ol/style'
 import { useEffect } from 'react'
 
-export default function VMap({ stores }) {
+export default function VMap({ stores, setSelectedStoreIds }) {
   useEffect(() => {
     const map = new Map({
       controls: defaults({ zoom: true, rotate: false }).extend([]),
@@ -108,7 +108,7 @@ export default function VMap({ stores }) {
       if (feature) {
         const clusteredFeatures = feature.get('features')
         const storeId = clusteredFeatures.map((f) => f.get('storeId'))
-        console.log(storeId)
+        setSelectedStoreIds(storeId)
       }
     })
 
