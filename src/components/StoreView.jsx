@@ -36,9 +36,61 @@ export default function StoreView({ stores }) {
 
       <div className="fixed bottom-0 left-0 w-full">
         <section className="m-auto h-80 w-full max-w-screen-md rounded-t-3xl bg-white p-5">
-          <ul>
-            <li></li>
-          </ul>
+          {selectedStores ? (
+            <>
+              <h2 className="mb-2 text-lg font-bold">선결제 매장 목록</h2>
+              <ul className="h-full space-y-5 overflow-y-auto pb-10">
+                {selectedStores.map(
+                  ({
+                    id,
+                    name,
+                    date,
+                    time,
+                    notes,
+                    recipient_name,
+                    road_address,
+                    detailed_address,
+                    orders,
+                  }) => (
+                    <li
+                      key={`store-${name}-${id}`}
+                      className="rounded-xl bg-stone-100 p-5"
+                    >
+                      <h3 className="font-semibold">{name}</h3>
+                      <p>
+                        {date?.split('T')[0]}일{time && `, ${time}`}
+                      </p>
+                      <p>{recipient_name}</p>
+                      <p>
+                        {road_address}
+                        {detailed_address && `, ${detailed_address}`}
+                      </p>
+                      <p>{notes}</p>
+                      <ul>
+                        {orders?.map(
+                          ({ id, name, quantity, max_per_person }) => (
+                            <li key={`order-${name}-${id}`}>
+                              <p>메뉴명: {name}</p>
+                              <p>개수: {quantity}</p>
+                              <p>
+                                1인{' '}
+                                {max_per_person > 1
+                                  ? `최대 ${max_per_person}`
+                                  : max_per_person}
+                                개
+                              </p>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </>
+          ) : (
+            <div>촛불24는 ~입니다.</div>
+          )}
         </section>
       </div>
     </>

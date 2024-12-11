@@ -28,7 +28,9 @@ export async function getStoresByIds(storeIds = []) {
             *,
             orders (
                 id,
+                name,
                 quantity,
+                max_per_person,
                 created_at
             )
         `,
