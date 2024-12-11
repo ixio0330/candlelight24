@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import VMap from './VMap'
 
 export default function StoreView({ stores }) {
@@ -16,12 +17,12 @@ export default function StoreView({ stores }) {
           const data = await response.json()
 
           if (response == null) {
-            // error
+            toast.error('오류가 발생했어요.')
           }
 
           setSelectedStores(data)
         } catch (err) {
-          // error
+          toast.error('오류가 발생했어요.')
         }
       }
 

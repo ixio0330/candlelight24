@@ -1,5 +1,6 @@
 import { Noto_Sans_KR } from 'next/font/google'
 import Image from 'next/image'
+import { Toaster } from 'react-hot-toast'
 import './globals.css'
 
 const notoSans = Noto_Sans_KR({
@@ -52,6 +53,8 @@ export default function RootLayout({ children }) {
         <main className="mt-16 bg-white">
           <div className="m-auto max-w-screen-md">{children}</div>
         </main>
+
+        <Toaster />
       </body>
     </html>
   )
