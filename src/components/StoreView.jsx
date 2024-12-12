@@ -188,17 +188,17 @@ export default function StoreView({ stores }) {
             </>
           ) : (
             <div className="space-y-2">
-              <h2 className="font-bold">사용안내</h2>
-              <p className="text-sm">
-                지도에서 동그라미로 표시된 장소를 선택하면, 해당 지역에서 집회를
-                위해 선결제된 매장과 메뉴 정보를 쉽게 확인할 수 있어요.
-              </p>
+              <h2 className="font-bold">사용방법</h2>
+              <ol className="list-decimal pl-5 text-sm">
+                <li>지도에서 동그라미로 표시된 곳 선택</li>
+                <li>집회를 위해 선결제된 매장과 메뉴 정보 확인</li>
+              </ol>
 
               <h2 className="font-bold">예시</h2>
-              <div className="rounded-lg border border-stone-300 bg-white p-2 text-sm">
+              <div className="space-y-1 rounded-lg border border-stone-300 bg-white p-2 text-sm">
                 <p className="flex items-center gap-1">
                   <User className="h-3.5 w-3.5 shrink-0" />
-                  {'[이름]'}으로 수령하면 돼요.
+                  {'[이름]'}으로 수령할 수 있어요.
                 </p>
                 <p className="flex items-center gap-1">
                   <Clock3 className="h-3.5 w-3.5 shrink-0" />
