@@ -43,10 +43,10 @@ export default function StoreView({ stores }) {
       <VMap stores={stores} setSelectedStoreIds={setSelectedStoreIds} />
 
       <div className="fixed bottom-0 left-0 w-full">
-        <section className="m-auto h-[50vh] w-full max-w-screen-md rounded-t-3xl bg-white px-5">
+        <section className="m-auto h-[50vh] w-full max-w-screen-md rounded-t-3xl bg-white px-5 pt-4">
           {selectedStores ? (
             <>
-              <div className="flex items-center justify-between pb-3 pt-4">
+              <div className="flex items-center justify-between pb-3">
                 <p className="text-stone-500">
                   총{' '}
                   <span className="font-bold text-blue-500">
@@ -181,17 +181,47 @@ export default function StoreView({ stores }) {
               ) : (
                 <p className="text-sm text-stone-500">
                   {showTodayOnly
-                    ? '오늘 날짜의 선결제 매장이 존재하지 않아요'
-                    : '선결제된 매장이 존재하지 않아요'}
+                    ? '오늘 날짜의 선결제 매장이 존재하지 않아요.'
+                    : '선결제된 매장이 존재하지 않아요.'}
                 </p>
               )}
             </>
           ) : (
-            <div>
-              <p>
+            <div className="space-y-2">
+              <h2 className="font-bold">사용안내</h2>
+              <p className="text-sm">
                 지도에서 동그라미로 표시된 장소를 선택하면, 해당 지역에서 집회를
-                위해 선결제된 매장과 메뉴 정보를 쉽게 확인할 수 있습니다.
+                위해 선결제된 매장과 메뉴 정보를 쉽게 확인할 수 있어요.
               </p>
+
+              <h2 className="font-bold">예시</h2>
+              <div className="rounded-lg border border-stone-300 bg-white p-2 text-sm">
+                <p className="flex items-center gap-1">
+                  <User className="h-3.5 w-3.5 shrink-0" />
+                  {'[이름]'}으로 수령하면 돼요.
+                </p>
+                <p className="flex items-center gap-1">
+                  <Clock3 className="h-3.5 w-3.5 shrink-0" />
+                  2024-12-OO, 시간
+                </p>
+
+                <p className="flex items-center gap-1">
+                  <Pencil className="h-3.5 w-3.5 shrink-0" />
+                  메모 내용
+                </p>
+
+                <div className="my-1 h-px bg-stone-200" />
+
+                <div className="flex items-center gap-1">
+                  <p className="font-semibold">메뉴 이름</p>
+                  <p className="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-xs text-white">
+                    총 10개
+                  </p>
+                  <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-xs text-white">
+                    1인 1개
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </section>
