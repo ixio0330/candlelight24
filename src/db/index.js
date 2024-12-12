@@ -8,7 +8,7 @@ export async function getAllStores() {
     const { data: orders, error: ordersError } = await supabase
       .from('orders')
       .select('store_id')
-      .gt('end_date', getToday())
+      .gte('end_date', getToday())
 
     if (ordersError) {
       console.log(ordersError)
@@ -60,7 +60,7 @@ export async function getStoresByIds(storeIds = []) {
         `,
       )
       .in('id', storeIds)
-      .filter('orders.end_date', 'gt', getToday())
+      .filter('orders.end_date', 'gte', getToday())
 
     if (error) {
       console.log(error)
