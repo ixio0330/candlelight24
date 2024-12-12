@@ -52,7 +52,8 @@ export async function getStoresByIds(storeIds = []) {
                 max_per_person,
                 recipient_name,
                 time,
-                date,
+                start_date,
+                end_date,
                 notes,
                 created_at
             )
