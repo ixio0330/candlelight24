@@ -1,5 +1,3 @@
 export function getToday() {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  return today.toISOString()
+  return new Date().toISOString().split('T')[0]
 }
