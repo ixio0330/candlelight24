@@ -8,7 +8,7 @@ export async function getAllStores() {
     const { data: orders, error: ordersError } = await supabase
       .from('orders')
       .select('store_id')
-      .gt('start_date', getToday())
+      .gt('end_date', getToday())
 
     if (ordersError) {
       console.log(ordersError)
@@ -60,7 +60,7 @@ export async function getStoresByIds(storeIds = []) {
         `,
       )
       .in('id', storeIds)
-      .filter('orders.start_date', 'gt', getToday())
+      .filter('orders.end_date', 'gt', getToday())
 
     if (error) {
       console.log(error)
@@ -69,13 +69,14 @@ export async function getStoresByIds(storeIds = []) {
 
     const storesWithGroupedOrders = data.map((store) => {
       const groupedOrders = store.orders.reduce((acc, order) => {
-        const { recipient_name, time, date, notes, ...rest } = order
+        const { recipient_name, time, start_date, end_date, notes, ...rest } =
+          order
 
         if (!acc[recipient_name]) {
           acc[recipient_name] = {
             time,
-            date,
-            notes,
+            start_date,
+            end_date,
             list: [],
           }
         }
@@ -92,10 +93,11 @@ export async function getStoresByIds(storeIds = []) {
       return {
         ...storeWithoutOrders,
         orders: Object.entries(groupedOrders).map(
-          ([recipient_name, { time, date, notes, list }]) => ({
+          ([recipient_name, { time, start_date, end_date, notes, list }]) => ({
             recipient_name,
             time,
-            date,
+            start_date,
+            end_date,
             notes,
             list,
           }),
