@@ -9,6 +9,7 @@ export async function getAllStores() {
       .from('orders')
       .select('store_id')
       .gte('end_date', getToday())
+      .eq('is_active', true)
 
     if (ordersError) {
       console.log(ordersError)
@@ -55,12 +56,14 @@ export async function getStoresByIds(storeIds = []) {
                 start_date,
                 end_date,
                 notes,
-                created_at
+                created_at,
+                is_active
             )
         `,
       )
       .in('id', storeIds)
       .filter('orders.end_date', 'gte', getToday())
+      .filter('orders.is_active', 'eq', true)
 
     if (error) {
       console.log(error)
@@ -79,38 +82,40 @@ export async function getStoresByIds(storeIds = []) {
       }, {})
 
       // 각 날짜 그룹 내에서 이름으로 list 묶기
-      const processedOrders = Object.entries(ordersByDate).map(([dateKey, dateOrders]) => {
-        const groupedByRecipient = dateOrders.reduce((acc, order) => {
-          const { recipient_name, ...rest } = order
-          if (!acc[recipient_name]) {
-            acc[recipient_name] = []
-          }
-          acc[recipient_name].push(rest)
-          return acc
-        }, {})
+      const processedOrders = Object.entries(ordersByDate)
+        .map(([dateKey, dateOrders]) => {
+          const groupedByRecipient = dateOrders.reduce((acc, order) => {
+            const { recipient_name, ...rest } = order
+            if (!acc[recipient_name]) {
+              acc[recipient_name] = []
+            }
+            acc[recipient_name].push(rest)
+            return acc
+          }, {})
 
-        // 첫 번째 주문에서 공통 정보 가져오기
-        const firstOrder = dateOrders[0]
-        return {
-          recipient_name: firstOrder.recipient_name,
-          time: firstOrder.time,
-          start_date: firstOrder.start_date,
-          end_date: firstOrder.end_date,
-          notes: firstOrder.notes,
-          list: groupedByRecipient[firstOrder.recipient_name]
-        }
-      }).sort((a, b) => {
-        // 날짜순 정렬
-        if (a.end_date === b.end_date) {
-          return (a.time || '') > (b.time || '') ? 1 : -1
-        }
-        return a.end_date > b.end_date ? 1 : -1
-      })
+          // 첫 번째 주문에서 공통 정보 가져오기
+          const firstOrder = dateOrders[0]
+          return {
+            recipient_name: firstOrder.recipient_name,
+            time: firstOrder.time,
+            start_date: firstOrder.start_date,
+            end_date: firstOrder.end_date,
+            notes: firstOrder.notes,
+            list: groupedByRecipient[firstOrder.recipient_name],
+          }
+        })
+        .sort((a, b) => {
+          // 날짜순 정렬
+          if (a.end_date === b.end_date) {
+            return (a.time || '') > (b.time || '') ? 1 : -1
+          }
+          return a.end_date > b.end_date ? 1 : -1
+        })
 
       const { orders, ...storeWithoutOrders } = store
       return {
         ...storeWithoutOrders,
-        orders: processedOrders
+        orders: processedOrders,
       }
     })
 
