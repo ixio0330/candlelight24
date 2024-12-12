@@ -4,7 +4,10 @@ import StoreInfo from './StoreInfo'
 
 export default function StoreList({ filteredStores, listRef, showTodayOnly }) {
   return filteredStores?.length > 0 ? (
-    <ul className="h-full space-y-5 overflow-y-auto pb-16" ref={listRef}>
+    <ul
+      className="h-full space-y-5 overflow-y-auto pb-8 md:pb-14"
+      ref={listRef}
+    >
       {filteredStores.map((store) => (
         <StoreInfo key={`store-${store.name}-${store.id}`} {...store} />
       ))}
