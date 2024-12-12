@@ -13,7 +13,7 @@ export default function OrderInfo({
   return (
     <div className="rounded-lg border border-stone-300 bg-white p-2">
       <div className="flex flex-col gap-1 text-sm">
-        {recipient_name !== 'null' && (
+        {recipient_name !== 'null' && recipient_name && (
           <h4 className="flex items-center gap-1">
             <User className="h-3.5 w-3.5 shrink-0" />
             {recipient_name}
@@ -42,8 +42,7 @@ export default function OrderInfo({
             </p>
             <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-xs text-white">
               1인{' '}
-              {max_per_person > 1 ? `최대 ${max_per_person}` : max_per_person}
-              개
+              {max_per_person > 1 ? `최대 ${max_per_person}` : max_per_person}개
             </p>
           </li>
         ))}
