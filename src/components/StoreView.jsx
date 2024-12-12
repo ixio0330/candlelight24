@@ -48,7 +48,7 @@ export default function StoreView({ stores }) {
                       <div className="space-y-3">
                         {orders?.map(
                           (
-                            { recipient_name, list, date, time, notes },
+                            { recipient_name, list, start_date, time, notes },
                             idx,
                           ) => (
                             <div
@@ -65,7 +65,7 @@ export default function StoreView({ stores }) {
                                 {/* 날짜 & 시간 */}
                                 <p className="flex items-center gap-1">
                                   <Clock3 className="h-3.5 w-3.5 shrink-0" />
-                                  {date?.split('T')[0]}일{time && `, ${time}`}
+                                  {start_date}일{time && `, ${time}`}
                                 </p>
 
                                 {/* 메모 */}
