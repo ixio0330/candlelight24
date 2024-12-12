@@ -51,9 +51,16 @@ export default function StoreView({ stores }) {
           </span>
           개
         </p>
-        <FilterButtons showTodayOnly={showTodayOnly} setShowTodayOnly={setShowTodayOnly} />
+        <FilterButtons
+          showTodayOnly={showTodayOnly}
+          setShowTodayOnly={setShowTodayOnly}
+        />
       </div>
-      <StoreList filteredStores={filteredStores} listRef={listRef} showTodayOnly={showTodayOnly} />
+      <StoreList
+        filteredStores={filteredStores}
+        listRef={listRef}
+        showTodayOnly={showTodayOnly}
+      />
     </>
   ) : (
     <GuideMessage />
