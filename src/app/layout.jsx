@@ -51,9 +51,16 @@ export default function RootLayout({ children }) {
               촛불24
             </h1>
 
-            <div className="text-sm">
+            <div className="flex items-center gap-2 text-sm">
               <Link href="https://forms.gle/Uh5TUVUbn8vyFDcj9" target="_blank">
                 제보하기
+              </Link>
+              <Link
+                href="https://buymeacoffee.com/candlelight24"
+                target="_blank"
+                className="rounded-lg bg-yellow-400 px-2 py-1.5 text-stone-700"
+              >
+                ☕️ 운영 후원
               </Link>
             </div>
           </div>
