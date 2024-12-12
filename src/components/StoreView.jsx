@@ -22,11 +22,10 @@ export default function StoreView({ stores }) {
       <VMap stores={stores} setSelectedStoreIds={setSelectedStoreIds} />
 
       <div className="fixed bottom-0 left-0 w-full">
-        <section className="m-auto h-[50vh] w-full max-w-screen-md rounded-t-3xl bg-white p-5">
+        <section className="m-auto h-[50vh] w-full max-w-screen-md rounded-t-3xl bg-white px-5 pt-5">
           {selectedStores ? (
             <>
-              <h2 className="mb-2 text-lg font-bold">선결제 매장 목록</h2>
-              <ul className="h-full space-y-5 overflow-y-auto pb-10">
+              <ul className="h-full space-y-5 overflow-y-auto pb-5">
                 {selectedStores.map(
                   ({ id, name, road_address, detailed_address, orders }) => (
                     <li
