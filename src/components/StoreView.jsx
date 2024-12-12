@@ -1,7 +1,7 @@
 'use client'
 
 import { Clock3, MapPin, Pencil, User } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useStoreCache } from '../hooks/useStoreCache'
 import OverlayLoader from './OverlayLoader'
 import VMap from './VMap'
@@ -10,6 +10,16 @@ export default function StoreView({ stores }) {
   const [selectedStoreIds, setSelectedStoreIds] = useState(null)
   const [selectedStores, setSelectedStores] = useState(null)
   const { getStores, loading } = useStoreCache()
+  const listRef = useRef(null)
+
+  useEffect(() => {
+    if (selectedStores && listRef.current) {
+      listRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      })
+    }
+  }, [selectedStores])
 
   useEffect(() => {
     if (selectedStoreIds?.length) {
@@ -25,7 +35,10 @@ export default function StoreView({ stores }) {
         <section className="m-auto h-[50vh] w-full max-w-screen-md rounded-t-3xl bg-white px-5 pt-5">
           {selectedStores ? (
             <>
-              <ul className="h-full space-y-5 overflow-y-auto pb-5">
+              <ul
+                className="h-full space-y-5 overflow-y-auto pb-5"
+                ref={listRef}
+              >
                 {selectedStores.map(
                   ({ id, name, road_address, detailed_address, orders }) => (
                     <li
