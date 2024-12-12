@@ -117,5 +117,10 @@ export default function VMap({ stores, setSelectedStoreIds }) {
     }
   }, [stores])
 
-  return <div id="vmap" style={{ width: '100%', height: '500px' }} />
+  return (
+    <div
+      id="vmap"
+      className="h-[calc(100vh-56px)] w-full md:h-[calc(50vh-56px)]"
+    />
+  )
 }
