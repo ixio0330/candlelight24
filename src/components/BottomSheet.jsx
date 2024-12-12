@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 export default function BottomSheet({ children }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
   const [isDragging, setIsDragging] = useState(false)
   const sheetRef = useRef(null)
   const startY = useRef(0)
@@ -74,10 +74,9 @@ export default function BottomSheet({ children }) {
   return (
     <div
       ref={sheetRef}
-      className={`fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-2xl rounded-t-3xl bg-white shadow-2xl transition-all duration-300 ease-in-out ${isOpen ? 'h-[60vh]' : 'h-[50vh]'} md:hidden`}
-      style={{
-        transform: isOpen ? 'translateY(0)' : 'translateY(60%)',
-      }}
+      className={`fixed bottom-0 left-0 right-0 z-50 mx-auto h-[50vh] w-full max-w-2xl rounded-t-3xl bg-white shadow-2xl transition-transform duration-300 ease-in-out md:hidden ${
+        isOpen ? 'translate-y-0' : 'translate-y-[60%]'
+      }`}
     >
       {/* 드래그 영역 */}
       <div
