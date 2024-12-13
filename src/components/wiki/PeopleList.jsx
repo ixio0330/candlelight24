@@ -33,10 +33,12 @@ function debounce(func, wait) {
 
 export default function PeopleList({ initialPeople }) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [filteredPeople, setFilteredPeople] = useState(initialPeople)
+  const [filteredPeople, setFilteredPeople] = useState(initialPeople || [])
 
   const updateSearch = useCallback(
     debounce((value) => {
+      if (!initialPeople) return
+      
       const search = value.toLowerCase()
       const filtered = initialPeople.filter(
         (person) =>
@@ -52,6 +54,14 @@ export default function PeopleList({ initialPeople }) {
     const value = e.target.value
     setSearchTerm(value)
     updateSearch(value)
+  }
+
+  if (!initialPeople) {
+    return (
+      <div className="flex h-[calc(100vh-40px)] items-center justify-center">
+        <p>데이터를 불러오는 중입니다...</p>
+      </div>
+    )
   }
 
   return (

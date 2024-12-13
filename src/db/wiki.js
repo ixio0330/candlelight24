@@ -1,3 +1,5 @@
+'use server'
+
 import createSupabase from '@/supabase'
 
 export const getAllPeople = async () => {
@@ -20,7 +22,7 @@ export const getAllPeople = async () => {
       .select('vote_id, person_id, status')
       .in(
         'person_id',
-        people.map((person) => person.id),
+        people?.map((person) => person.id),
       )
 
     if (voteResultsError) {
@@ -28,7 +30,7 @@ export const getAllPeople = async () => {
       return
     }
 
-    const voteIds = voteResults.map((result) => result.vote_id)
+    const voteIds = voteResults?.map((result) => result.vote_id)
     const { data: votes, error: votesError } = await supabase
       .from('wiki_votes')
       .select('id, date, name')
@@ -39,12 +41,12 @@ export const getAllPeople = async () => {
       return
     }
 
-    const combinedData = people.map((person) => {
+    const combinedData = people?.map((person) => {
       const personVoteResults = voteResults.filter(
         (result) => result.person_id === person.id,
       )
-      const personVotes = personVoteResults.map((result) => {
-        const vote = votes.find((vote) => vote.id === result.vote_id)
+      const personVotes = personVoteResults?.map((result) => {
+        const vote = votes?.find((vote) => vote.id === result.vote_id)
         return { ...result, ...vote }
       })
 
