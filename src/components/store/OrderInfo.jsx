@@ -46,10 +46,13 @@ export default function OrderInfo({
             <p className="shrink-0 rounded-full bg-blue-500 px-3 py-1 text-xs text-white">
               총 {quantity}개
             </p>
-            <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-xs text-white">
-              1인{' '}
-              {max_per_person > 1 ? `최대 ${max_per_person}` : max_per_person}개
-            </p>
+            {0 < max_per_person && (
+              <p className="shrink-0 rounded-full bg-lime-500 px-3 py-1 text-xs text-white">
+                1인{' '}
+                {max_per_person > 1 ? `최대 ${max_per_person}` : max_per_person}
+                개
+              </p>
+            )}
           </li>
         ))}
       </ul>
