@@ -1,3 +1,4 @@
+import BodyClassProvider from '@/components/providers/BodyClassProvider'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { Noto_Sans_KR } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
@@ -39,9 +40,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ko">
-      <body
-        className={`${notoSans.className} h-screen overflow-hidden bg-white`}
-      >
+      <body className={`${notoSans.className} bg-white`}>
+        <BodyClassProvider />
         {children}
 
         <Toaster />
