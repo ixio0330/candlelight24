@@ -40,7 +40,7 @@ export default function PeopleList({ initialPeople }) {
       if (!initialPeople) return
 
       const search = value.toLowerCase()
-      const filtered = initialPeople.filter(
+      const filtered = initialPeople?.filter(
         (person) =>
           person.name.toLowerCase().includes(search) ||
           person.region.toLowerCase().includes(search),
@@ -54,14 +54,6 @@ export default function PeopleList({ initialPeople }) {
     const value = e.target.value
     setSearchTerm(value)
     updateSearch(value)
-  }
-
-  if (!initialPeople) {
-    return (
-      <div className="flex h-[calc(100vh-40px)] items-center justify-center">
-        <p>데이터를 불러오는 중입니다...</p>
-      </div>
-    )
   }
 
   return (
@@ -80,10 +72,10 @@ export default function PeopleList({ initialPeople }) {
       </div>
 
       <ul className="grid h-[calc(100vh-147px)] auto-rows-min grid-cols-1 gap-5 overflow-y-auto px-5 pb-8 md:grid-cols-2">
-        {filteredPeople.map((person) => (
+        {filteredPeople?.map((person) => (
           <li
             key={`person-${person.id}`}
-            className="flex h-[140px] flex-col justify-between rounded-xl border p-5"
+            className="flex flex-col justify-between gap-2 rounded-xl border p-5"
           >
             <div>
               <div className="flex items-center justify-between">
