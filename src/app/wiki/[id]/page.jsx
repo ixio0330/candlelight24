@@ -15,7 +15,7 @@ export default async function ProfileWikiPage({ params }) {
     <>
       <section>
         <div className="flex h-14 items-center justify-between px-3 pr-5">
-          <Link href="./">
+          <Link href="/wiki">
             <ChevronLeft className="h-6 w-6" />
           </Link>
           <h2 className="font-bold">{personDetail?.name}</h2>
