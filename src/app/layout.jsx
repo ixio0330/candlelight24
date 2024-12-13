@@ -16,11 +16,15 @@ export const viewport = {
   minimumScale: 1,
 }
 
+const metadataBase = new URL(`https://${process.env.NEXT_PUBLIC_DOMAIN}`)
+
 export const metadata = {
+  metadataBase,
   title: '촛불24',
   description: '집회를 위한 선결제 정보를 한번에 모아보세요.',
   author: '촛불24',
   openGraph: {
+    url: metadataBase,
     title: '촛불24',
     site_name: '촛불24',
     description: '집회를 위한 선결제 정보를 한번에 모아보세요.',
@@ -34,6 +38,23 @@ export const metadata = {
       },
     ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@seo__namu',
+    creator: '@seo__namu',
+    title: '촛불24',
+    description: '집회를 위한 선결제 정보를 한번에 모아보세요.',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        alt: '촛불24',
+      },
+    ],
+  },
+  additionalMetaTags: [
+    { name: 'theme-color', content: '#ffffff' },
+    { name: 'keywords', content: '촛불24, 집회, 선결제, 정보' },
+  ],
 }
 
 export default function RootLayout({ children }) {
