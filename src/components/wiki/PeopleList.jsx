@@ -2,7 +2,7 @@
 
 import { ChevronRight, Search } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 function getChipStyle(status) {
   switch (status) {
@@ -19,16 +19,40 @@ function getChipStyle(status) {
   }
 }
 
+function debounce(func, wait) {
+  let timeout
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout)
+      func(...args)
+    }
+    clearTimeout(timeout)
+    timeout = setTimeout(later, wait)
+  }
+}
+
 export default function PeopleList({ initialPeople }) {
   const [searchTerm, setSearchTerm] = useState('')
+  const [filteredPeople, setFilteredPeople] = useState(initialPeople)
 
-  const filteredPeople = initialPeople.filter((person) => {
-    const search = searchTerm.toLowerCase()
-    return (
-      person.name.toLowerCase().includes(search) ||
-      person.region.toLowerCase().includes(search)
-    )
-  })
+  const updateSearch = useCallback(
+    debounce((value) => {
+      const search = value.toLowerCase()
+      const filtered = initialPeople.filter(
+        (person) =>
+          person.name.toLowerCase().includes(search) ||
+          person.region.toLowerCase().includes(search)
+      )
+      setFilteredPeople(filtered)
+    }, 300),
+    [initialPeople]
+  )
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value
+    setSearchTerm(value)
+    updateSearch(value)
+  }
 
   return (
     <div className="">
@@ -38,7 +62,7 @@ export default function PeopleList({ initialPeople }) {
             type="text"
             placeholder="이름 또는 지역으로 검색"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             className="w-full rounded-lg border p-2 pl-9 text-sm focus:outline-black"
           />
           <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
