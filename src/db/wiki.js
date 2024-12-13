@@ -31,7 +31,7 @@ export const getAllPeople = async () => {
     const voteIds = voteResults.map((result) => result.vote_id)
     const { data: votes, error: votesError } = await supabase
       .from('wiki_votes')
-      .select('id, date')
+      .select('id, date, name')
       .in('id', voteIds)
 
     if (votesError) {
