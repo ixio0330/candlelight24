@@ -26,10 +26,16 @@ export default function OrderInfo({
         </p>
 
         {notes && (
-          <p className="flex items-center gap-1">
-            <Pencil className="h-3.5 w-3.5 shrink-0" />
-            {notes}
-          </p>
+          <div className="flex space-x-1">
+            <Pencil className="flex-start mt-1 h-3.5 w-3.5 shrink-0" />
+            <div className="space-y-1">
+              {notes?.split('\n').map((note, idx) => (
+                <p key={note + idx} className="">
+                  {note}
+                </p>
+              ))}
+            </div>
+          </div>
         )}
         <div className="my-1 h-px bg-stone-200" />
       </div>
