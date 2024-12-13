@@ -1,3 +1,4 @@
+import NoticeModal from '@/components/NoticeModal'
 import StoreView from '@/components/store/StoreView'
 import { getAllStores } from '@/db/store'
 import Image from 'next/image'
@@ -36,6 +37,8 @@ export default async function MainPage() {
           <StoreView stores={stores} />
         </div>
       </main>
+
+      <NoticeModal />
     </>
   )
 }
