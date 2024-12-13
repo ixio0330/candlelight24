@@ -3,13 +3,18 @@
 import { MapPin } from 'lucide-react'
 import OrderInfo from './OrderInfo'
 
-export default function StoreInfo({ name, road_address, detailed_address, orders }) {
+export default function StoreInfo({
+  name,
+  road_address,
+  detailed_address,
+  orders,
+}) {
   return (
     <li className="space-y-2 rounded-xl bg-stone-100 p-5">
       <h3 className="font-semibold">{name}</h3>
       <div className="space-y-1 text-sm">
-        <div className="flex items-center gap-1">
-          <MapPin className="h-4 w-4 shrink-0" />
+        <div className="flex gap-1">
+          <MapPin className="mt-[2px] h-4 w-4 shrink-0" />
           <p>
             {road_address}
             {detailed_address && `, ${detailed_address}`}
