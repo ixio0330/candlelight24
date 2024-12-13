@@ -1,7 +1,7 @@
 'use client'
 
 import { getToday } from '@/utils/date'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useStoreCache } from '../hooks/useStoreCache'
 import BottomSheet from './BottomSheet'
 import FilterButtons from './FilterButtons'
@@ -15,16 +15,6 @@ export default function StoreView({ stores }) {
   const [selectedStores, setSelectedStores] = useState(null)
   const [showTodayOnly, setShowTodayOnly] = useState(false)
   const { getStores, loading } = useStoreCache()
-  const listRef = useRef(null)
-
-  useEffect(() => {
-    if (selectedStores && listRef.current) {
-      listRef.current.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
-    }
-  }, [selectedStores])
 
   useEffect(() => {
     if (selectedStoreIds?.length) {
@@ -58,7 +48,6 @@ export default function StoreView({ stores }) {
       </div>
       <StoreList
         filteredStores={filteredStores}
-        listRef={listRef}
         showTodayOnly={showTodayOnly}
       />
     </>
