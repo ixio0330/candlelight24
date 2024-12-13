@@ -59,3 +59,34 @@ export const getAllPeople = async () => {
     return null
   }
 }
+
+export const getPersonDetailById = async (id) => {
+  try {
+    const supabase = createSupabase()
+
+    const { data: person, error: personError } = await supabase
+      .from('wiki_people')
+      .select('party_id, name, image, region, count, committee, process')
+      .eq('id', Number(id))
+      .single()
+
+    if (personError) {
+      console.error('Error fetching person data:', personError)
+      return null
+    }
+
+    const { data: wiki } = await supabase
+      .from('wiki_wikis')
+      .select('*')
+      .eq('person_id', Number(id))
+      .single()
+
+    return {
+      ...person,
+      wiki: wiki ?? null,
+    }
+  } catch (error) {
+    console.error('Error in getPersonDetailById:', error)
+    return null
+  }
+}
