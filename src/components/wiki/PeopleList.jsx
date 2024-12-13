@@ -38,16 +38,16 @@ export default function PeopleList({ initialPeople }) {
   const updateSearch = useCallback(
     debounce((value) => {
       if (!initialPeople) return
-      
+
       const search = value.toLowerCase()
       const filtered = initialPeople.filter(
         (person) =>
           person.name.toLowerCase().includes(search) ||
-          person.region.toLowerCase().includes(search)
+          person.region.toLowerCase().includes(search),
       )
       setFilteredPeople(filtered)
     }, 300),
-    [initialPeople]
+    [initialPeople],
   )
 
   const handleSearchChange = (e) => {
@@ -79,7 +79,7 @@ export default function PeopleList({ initialPeople }) {
         </div>
       </div>
 
-      <ul className="grid h-[calc(100vh-147px)] auto-rows-min grid-cols-2 gap-5 overflow-y-auto px-5 pb-8">
+      <ul className="grid h-[calc(100vh-147px)] auto-rows-min grid-cols-1 gap-5 overflow-y-auto px-5 pb-8 md:grid-cols-2">
         {filteredPeople.map((person) => (
           <li
             key={`person-${person.id}`}
