@@ -75,7 +75,7 @@ export default function PeopleList({ initialPeople }) {
         {filteredPeople?.map((person) => (
           <li
             key={`person-${person.id}`}
-            className="flex flex-col justify-between gap-2 rounded-xl border p-5"
+            className="flex flex-col justify-between gap-2 rounded-lg border p-5"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -84,7 +84,7 @@ export default function PeopleList({ initialPeople }) {
                   href={`/wiki/${person?.id}`}
                   className="rounded-full p-1 md:hover:bg-stone-100"
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-5 w-5" />
                 </Link>
               </div>
               <p className="text-sm">
