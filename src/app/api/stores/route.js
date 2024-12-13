@@ -1,4 +1,4 @@
-import { getStoresByIds } from '@/db'
+import { getStoresByIds } from '@/db/store'
 
 export async function GET(request) {
   const searchParams = request.nextUrl.searchParams

@@ -1,5 +1,5 @@
-import StoreView from '@/components/StoreView'
-import { getAllStores } from '@/db'
+import StoreView from '@/components/store/StoreView'
+import { getAllStores } from '@/db/store'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -22,7 +22,7 @@ export default async function MainPage() {
             <Link
               href="https://buymeacoffee.com/candlelight24"
               target="_blank"
-              className="text-stone-00 rounded-lg bg-yellow-400 px-2 py-1.5"
+              className="rounded-lg bg-yellow-400 px-2 py-1.5 text-stone-700"
             >
               ☕️ 운영 후원
             </Link>
