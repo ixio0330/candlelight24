@@ -18,7 +18,7 @@ export default function WikiLayout({ children }) {
             <Link
               href="https://buymeacoffee.com/candlelight24"
               target="_blank"
-              className="text-stone-00 rounded-lg bg-yellow-400 px-2 py-1.5"
+              className="rounded-lg bg-yellow-400 px-2 py-1.5 text-stone-700"
             >
               ☕️ 운영 후원
             </Link>

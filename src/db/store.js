@@ -1,3 +1,5 @@
+'use server'
+
 import createSupabase from '@/supabase'
 import { getToday } from '@/utils/date'
 
