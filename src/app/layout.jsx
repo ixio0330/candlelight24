@@ -40,8 +40,6 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@seo__namu',
-    creator: '@seo__namu',
     title: '촛불24',
     description: '집회를 위한 선결제 정보를 한번에 모아보세요.',
     images: [
